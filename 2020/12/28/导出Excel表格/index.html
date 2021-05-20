@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="导出Excel表格"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">导出Excel表格</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-12-28</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/node/">#node</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>excel-export,A simple node.js module for exporting data set to Excel xlsx file.</p>
+<!-- more  -->
+
+<h4 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h4><ul>
+<li>在node环境下,到相应路径”npm init” 初始化json文件</li>
+<li>安装express “npm install express”</li>
+<li>全局安装nodemon “npm install nodemon –global –save”</li>
+<li>“nodemon XXX” 启动项目</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>入口文件app.js ：</p>
+<pre style="background:#004445">
+    const express=require('express');
+    const app= new express();
+
+    app.listen(5000,(req,res)=>{
+        console.log (`server is running on 5000` );
+    })
+    // 导入路径
+    const Excel = require("./api/excel");
+    // 使用路由
+    app.use('/api',Excel);
+</pre>
+
+<p>接口文件Excel.js ：</p>
+<pre style="background:#004445">
+    const express=require('express')
+    const router=express.Router();   
+    var nodeExcel = require('excel-export');
+
+        //文件导出路径
+        router.get('/Excel', function(req, res){
+        // 定义表头
+        var conf ={};
+        conf.name = "mysheet";
+            conf.cols = [{
+            caption:'字符串string',
+            type:'string',
+        },{
+            caption:'日期date',
+            type:'date',
+            beforeCellWrite:function(){
+                var originDate = new Date(Date.UTC(1899,11,30));
+                return function(row, cellData, eOpt){
+                        if (eOpt.rowNum%2){
+                        eOpt.styleIndex = 1;
+                        }  
+                        else{
+                        eOpt.styleIndex = 2;
+                        }
+                        if (cellData === null){
+                        eOpt.cellType = 'date';
+                        return Date.now;
+                        } else
+                        return (cellData - originDate) / (24 * 60 * 60 * 1000);
+                } 
+            }()
+        },{
+            caption:'布尔bool',
+            type:'bool'
+        },{
+            caption:'数字number',
+            type:'number'                
+            }];
+            // 表格内容
+            conf.rows = [
+            ['pi', new Date(Date.UTC(2013, 4, 1)), true, 3.14],
+            ["e", new Date(2012, 4, 1), false, 2.7182],
+            ["M&M<>'", new Date(Date.UTC(2013, 6, 9)), false, 1.61803],
+            ["null date", null, true, 1.414] 
+            ];
+            var result = nodeExcel.execute(conf);
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+            res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+            res.end(result, 'binary');
+    });
+
+    module.exports =router 
+</pre>
+
+
+<p>conf相当于单个sheet, conf.name为表名；conf.cols中存放了表头的内容，其中的beforeCellWrite为预处理函数；</p>
+<blockquote>
+<p>The return value from beforeCellWrite is what get written into the cell. Supported valid types are string, date, bool and number</p>
+</blockquote>
+<p>beforeCellWrit 函数返回的值为写入相应字段的值，支持数据类型有：字符串，日期，布尔，数字<br>conf.rows中存放了主体内。<br>最后四行代码将定义的表写入response中，实现excel表的下载导出功能。<br>详见：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/excel-export">https://www.npmjs.com/package/excel-export</a></p>
+<h4 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h4><ul>
+<li><p>使xlsx内容支持中文<br>注意res.setHeader这两行代码，Content-Type和Content-Disposition决定了访问该路由时获取的是要下载的内容。<br>在Content-Type中加入编码格式为utf-8即可实现文件内容支持中文</p>
+<pre style="background:#004445">
+res.setHeader('Content-Type', 'application/vnd.openxmlformats;charset=utf-8');
+</pre>
+</li>
+<li><p>使xlsx标题支持中文<br>在 Content-Disposition 中有filename，定义了文件名。中文文件名可以通过编码转化写入到header中。</p>
+<pre style="background:#004445">
+var name = encodeURI('测试表');
+res.setHeader("Content-Disposition", "attachment; filename=" + name + ".xlsx");
+</pre>
+</li>
+<li><p>头写入变量内容<br>必须先将conf.cols声明为数组才能使用循环语句将数据写入表头</p>
+<pre style="background:#004445">
+  conf.cols = [];
+  var test = ['序号', '学号', '姓名', '专业'];
+  for(var i=0; i"<"test.length;i++){   //"<" 正确写法为<,去掉引号
+      var temp = {
+      caption: test[i],
+      type: 'string'
+      };
+  conf.cols.push(temp);   
+</pre>
+</li>
+<li><p>表写入二维数组变量内容<br>假设从数据库中取出内容为data，属性包括id, name, profession并写入到表中。</p>
+<pre style="background:#004445">
+  var array = new Array();
+  for(var i=0; i"<"data.length; i++){   //"<" 正确写法为<,去掉引号
+      var temp = new Array();
+      temp[0] = i+1;
+      temp[1] = data[i].id;
+      temp[2] = data[i].name;
+      temp[3] = data[i].profession;
+      array.push(temp);
+  }
+  conf.rows = array
+</pre>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

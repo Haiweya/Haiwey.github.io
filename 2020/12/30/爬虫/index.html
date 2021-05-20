@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="爬虫"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">爬虫</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-12-30</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/javaScript/">#javaScript</a> <a class="tag" href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>爬虫程序可用于收集数据。这也是最直接和最常用的方法。由于爬虫程序是一个程序，程序运行得非常快，不会因为重复的事情而感到疲倦，因此使用爬虫程序获取大量数据变得非常简单和快速。</p>
+<a id="more"></a>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>爬虫可以获取数据，JavaScript可以进行爬虫程序编写，python也可以，用什么语言实现并不重要，重要的是用爬虫获取下来的数据改如何进行分析达到自己的需求。</p>
+<p>简单来讲，爬虫就是一个探测机器，它的基本操作就是模拟人的行为去各个网站溜达，点点按钮，查查数据，或者把看到的信息背回来。就像一只虫子在一幢楼里不知疲倦地爬来爬去。</p>
+<p>百度搜索引擎的爬虫叫作百度蜘蛛（Baiduspider）。百度蜘蛛每天会在海量的互联网信息中进行爬取，爬取优质信息并收录，当用户在百度搜索引擎上检索对应关键词时，百度将对关键词进行分析处理，从收录的网页中找出相关网页，按照一定的排名规则进行排序并将结果展现给用户。</p>
+<p>大数据时代也离不开爬虫。比如在进行大数据分析或数据挖掘时，我们可以去一些比较大型的官方站点下载数据源。但这些数据源比较有限，那么如何才能获取更多更高质量的数据源呢？此时，我们可以编写自己的爬虫程序，从互联网中进行数据信息的获取。所以在未来，爬虫的地位会越来越重要</p>
+<h4 id="爬虫可以做什么"><a href="#爬虫可以做什么" class="headerlink" title="爬虫可以做什么"></a>爬虫可以做什么</h4><p>爬虫可以抓取某个网站或者某个应用的内容，批量提取有用的价值，比如想把知乎上某一个问题的高赞答案全部抓取到本地并保存，或者搜集众多机票网站的航班价格信息做价格对比，各种论坛、股吧、微博、公众号的舆情分析，爬出四级的高频单词等。这些都归属于爬虫类，至少前期的数据搜集是属于爬虫的范畴，比如说投票神器、点赞神奇、预测（股市预测、票房预测）、社交关系网络、等等一系列以上都可以用爬虫实现，还可以用python爬虫一键爬取热门公众号文章，几千个爆款标题瞬间抓取，除了上面说的可以爬取新媒体的爆文，再来说说大家工作上的，举一些例子，评论一下就批量爬取下来了或设计师搜集素材，这是之前爬取食物图片，几千张图片，还自动保存在指定文件夹，而这些只用了大概40行左右的代码，</p>
+<p>同时，网络爬虫也可以用于金融投资领域，比如可以自动爬取一些金融信息，并进行投资分析等。</p>
+<p>有时，我们比较喜欢的新闻网站可能有几个，每次都要分别打开这些新闻网站进行浏览，比较麻烦。这时就可以利用网络爬虫，将这多个新闻网站中的新闻信息爬取下来，集中进行阅读。</p>
+<p>平常我们在浏览网页上的信息的时候，会发现有很多广告。同样可以利用爬虫将对应网页上的信息爬取过来，这样就可以自动的过滤掉这些广告，方便对信息的阅读与使用，有时，我们需要进行营销，那么如何找到目标客户以及目标客户的联系方式是一个关键问题。我们可以手动地在互联网中寻找，但是这样的效率会很低，这时，我们可以利用爬虫，可以设置对应的规则，自动地从互联网中采集目标用户的联系方式等数据，供我们进行营销使用。</p>
+<h4 id="爬虫工具"><a href="#爬虫工具" class="headerlink" title="爬虫工具"></a>爬虫工具</h4><ul>
+<li>可以使用基本的<code>axios</code>进行网络请求，然后运用<code>cheeio</code>传入html解析成dom进而对其进行操作</li>
+<li>也可以使用爬虫工具<code>Puppeteer</code></li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

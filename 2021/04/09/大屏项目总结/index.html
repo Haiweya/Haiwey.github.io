@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="大屏项目总结"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">大屏项目总结</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-04-09</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/">项目总结</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/BI/">#BI</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>把相对复杂、抽象的数据通过可视的方式以人们更易理解的图形展示出来的一系列手段叫做数据可视化，大屏数据可视化是以大屏为主要展示载体进行数据的可视化呈现。</p>
+<a id="more"></a>
+<h4 id="可视化工具"><a href="#可视化工具" class="headerlink" title="可视化工具"></a>可视化工具</h4><p>本次项目开发利用的可视化工具为蚂蚁可视化工具AntV/G2Plot,相对于echarts 来讲体积较小，个人感觉使用起来差不多。</p>
+<h4 id="列表无限滚动"><a href="#列表无限滚动" class="headerlink" title="列表无限滚动"></a>列表无限滚动</h4><p>技术实现思路为：</p>
+<ul>
+<li>滚动列表所依赖的数据复制一份(*2) </li>
+<li>滚动动画至 50% 回到初始位置无限执行</li>
+</ul>
+<p><a href="https://sm.ms/image/YEqdP9OWjt3MyFG" target="_blank"><img src="https://i.loli.net/2021/04/09/YEqdP9OWjt3MyFG.png" /></a></p>
+<pre style="background:#004445">
+//数据
+let dataSet = [...data].concat([...data])
+//样式
+@keyframes move {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, -50%, 0);
+    }
+}
+.scoll{
+    animation: move 0s infinite linear normal;
+
+    &:hover{
+        animation-play-state: paused;  //鼠标悬浮在其上时停止动画
+    }
+}
+</pre>
+
+<h4 id="父组件向上运动的过程中内容超出容器的子组件同时向左运动"><a href="#父组件向上运动的过程中内容超出容器的子组件同时向左运动" class="headerlink" title="父组件向上运动的过程中内容超出容器的子组件同时向左运动"></a>父组件向上运动的过程中内容超出容器的子组件同时向左运动</h4><p>dom结构如下：</p>
+<p><a href="https://sm.ms/image/xLdHEWJRgyk56QC" target="_blank"><img src="https://i.loli.net/2021/04/09/xLdHEWJRgyk56QC.png" /></a></p>
+<pre style="background:#004445">
+.father{
+    position: absolute;
+    animation: scroll 20s infinite linear normal;
+    @keyframes scroll {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, -50%, 0);  //向上滚动
+        }
+    }
+    &:hover {
+        animation-play-state: paused;
+    }
+}
+.children {
+    position : absolute
+}
+</pre>
+
+<pre style="background:#004445">
+.span-container{
+    overflow: hidden;  //超出隐藏
+    white-space: nowrap;  //超出不折行
+
+    span{
+        position: absolute;
+        &:hover {
+            animation-play-state: paused;
+        }
+    }
+}
+</pre>
+
+<pre style="background:#004445">
+.animation-left{
+    animation: scrollLeft 20s infinite linear normal;
+    @keyframes scrollLeft {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+}
+</pre>
+
+<p>如下情况表示当我在一个div中放置了一个盛有内容的span，我想要看看span</p>
+<pre style="background:#004445">
+    // 超出显示不下的情况下向左运动
+        handleAnimation() {
+            this.num.forEach(item => {
+                // 父级div
+                let dom = document.getElementById(item.id + 'name')
+                let domWidth = getComputedStyle(dom).width
+                let domWidthNum = domWidth.substring(0, domWidth.length - 2)
+                // 子级span
+                let span = dom.firstChild
+                let spanWidth = getComputedStyle(span).width
+                let spanWidthNum = spanWidth.substring(0, spanWidth.length - 2)
+                // 超出范围显示不下的添加动画类名
+                if (Number(domWidthNum) <= Number(spanWidthNum)) {
+                    span.classList.add('animation-left')
+                }
+            })
+        },
+</pre>
+
+
+<h4 id="任何屏幕下页面保持比例缩放"><a href="#任何屏幕下页面保持比例缩放" class="headerlink" title="任何屏幕下页面保持比例缩放"></a>任何屏幕下页面保持比例缩放</h4><pre  style="background:#004445">
+//App.vue 中
+mounted() {
+    this.refreshScale()
+    window.addEventListener('resize', this.refreshScale.bind(this), false)
+},
+methods: {
+    refreshScale() {
+        let e = document.documentElement // rootElement
+        let baseWidth = e.clientWidth // 元素内部宽度包括padding
+        let baseHeight = e.clientHeight
+        let appStyle = document.getElementById('app').style
+        let realRatio = baseWidth / baseHeight
+        let designRatio = 16 / 9
+        let scaleRate = baseWidth / 1920
+        if (realRatio > designRatio) {
+            scaleRate = baseHeight / 1080
+        }
+        appStyle.transformOrigin = 'left top'
+        appStyle.transform = `scale(${scaleRate})`
+        appStyle.width = `${baseWidth / scaleRate}px`
+
+        setTimeout(function() {
+            let designWidth = 1920
+            let designHeight = 1080
+            let lateWidth = document.documentElement.clientWidth
+            let lateHeight = document.documentElement.clientHeight
+            if (lateWidth === baseWidth) {
+                return
+            }
+
+            let widthRatio = lateWidth / designWidth
+            let heightRatio = lateHeight / designHeight
+            document.body.style = 'transform:scale(' + widthRatio + ',' + heightRatio + ');transform-origin:left top;' // 沿着左上顶点进行缩放
+        }, 0)
+    }
+</pre>
+
+<h4 id="父子组件传值-sync"><a href="#父子组件传值-sync" class="headerlink" title="父子组件传值.sync"></a>父子组件传值.sync</h4><p>实现最初原始数据由父组件传递给子组件，而子组件在有数据变化的需求时向父组件发出信号，实现类似双向绑定的机制</p>
+<p>子组件:</p>
+<pre  style="background:#004445">
+props: {
+    menu: {
+        type: Array,
+        default: function() {
+            return []
+        }
+    }
+},
+//用一个新的变量来承载menu, 从规范上来讲子组件不可更改父组件中的数据，此依赖子组件即可更改自己的types
+data() {
+    return {
+        types: this.menu,
+    }
+},
+
+watch: {
+    menu(val) {
+        this.types = val
+    },
+    //把变化之后的数据传递给父级
+    types(val) {
+        this.$emit('update:menu', val)
+    }
+},
+
+//更改types 
+methods: {
+    onTypeClick(index) {
+        let list = [...this.types]
+        let item = list[index]
+        item.active = !item.active
+        list[index] = item
+        this.types = list
+    }
+}
+</pre>
+
+<p>父组件:<br><code>&lt;MarkerMenu class=&quot;menu&quot; :menu.sync=&quot;menu&quot;&gt;&lt;/MarkerMenu&gt;</code></p>
+<pre  style="background:#004445">
+
+data(){
+    return{
+        menu:[{},{},{}...]
+    }
+}
+watch: {
+    menu(val) {
+        this.menu = val
+        this.menuClick()  //数据变化后要执行的函数
+    }
+},
+
+</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

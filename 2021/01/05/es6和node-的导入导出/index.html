@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="es6和node 的导入导出"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">es6和node 的导入导出</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-01-05</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/node/">#node</a> <a class="tag" href="/tags/es6/">#es6</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>在node中使用module.export 和 exports来暴露成员;使用 var 名称 = require(‘模块标识符’) 来导入.es6中导入模块，使用import 模块名称 from ‘模块标识符’ 或者import ‘路径’的方式。导出模块使用export default 和export 向外暴露成员</p>
+<a id="more"></a>
+
+<p><a href="https://sm.ms/image/kqKRGpuU3l7rntL" target="_blank"><img src="https://i.loli.net/2021/01/05/kqKRGpuU3l7rntL.jpg" /></a></p>
+<h4 id="node的导出与导入"><a href="#node的导出与导入" class="headerlink" title="node的导出与导入"></a>node的导出与导入</h4><p>1.node的导出语法<br>在node中使用module.export 和 exports来暴露成员;<br>使用 var 名称 = require(‘模块标识符’) 来导入</p>
+<pre style="background:#002b36">
+　　var path = {}
+
+　　module.exports = path
+
+
+　　暴漏多个对象：
+
+　　var a = {}
+
+　　var b = {}
+
+　　module.exports.a = a
+
+　　module.exports.b = b
+</pre>
+<p>2.node的导入语法</p>
+<pre style="background:#002b36">
+　　const path = require('path')
+
+ </pre>
+
+<h4 id="ES6的导出与导入"><a href="#ES6的导出与导入" class="headerlink" title="ES6的导出与导入"></a>ES6的导出与导入</h4><p>es6中导入模块，使用import 模块名称 from ‘模块标识符’ 或者import ‘路径’的方式。</p>
+<p>导出模块使用export default 和export 向外暴露成员</p>
+<p>1.ES6的导出语法</p>
+<pre style="background:#002b36">
+　　export default  {}  (只能暴漏一个成员)
+
+　　export var s = {}
+
+　　export var b = {}  (可以暴漏多个成员)
+
+</pre> 
+
+<p>2.ES6的导入语法</p>
+<pre style="background:#002b36">
+　　import a from '包名（或者是文件路径）'   (导入export default暴漏的成员)
+
+　　import {s} from '包名（或者是文件路径）' （导入export 暴漏的成员，名字要一致）
+</pre>
+
+
+<p>3.注意事项：</p>
+<p>　　// 模块化的js文件只能在服务器中被使用，本地的html文件导入模块会报错（本地使用webpack打包生成的bundle.js也不会报错）</p>
+<p> 　  // html文件使用script标签引入模块化js文件时，必须将type属性设置为module  <script src='./t1.js' type='module'></script></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

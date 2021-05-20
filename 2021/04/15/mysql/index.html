@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="mysql"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">mysql</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-04-15</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/MySQL/">#MySQL</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>索引在MySQL中也叫做“键”或者”key”（primary key，unique key，还有一个index key），是存储引擎用于快速找到记录的一种数据结构</p>
+<!-- more  -->
+
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>索引也就是我们通常说的键（key）</p>
+<ul>
+<li><p>primary 主键</p>
+</li>
+<li><p>foreign 外键</p>
+</li>
+<li><p>unique 唯一</p>
+</li>
+</ul>
+<h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><h5 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h5><pre>
+
+// 创建一个视图
+create view myView as select a.name, a.age, a.address from person as a,employ as e where a.id = e.perId and e.company ==='liangfengtai'
+
+// 使用视图
+ select * form myView
+
+</pre>
+
+<h5 id="修改视图"><a href="#修改视图" class="headerlink" title="修改视图"></a>修改视图</h5><p><code> alert view myView as ....</code></p>
+<h5 id="修改视图对基表的数据有影响"><a href="#修改视图对基表的数据有影响" class="headerlink" title="修改视图对基表的数据有影响"></a>修改视图对基表的数据有影响</h5><p><code>update myView set age = 18 where name=&#39;王小二&#39;</code></p>
+<h4 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h4><p>存储过程（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。</p>
+<p>存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给定参数(需要时)来调用执行。</p>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ul>
+<li>存储过程可封装，并隐藏复杂的商业逻辑。</li>
+<li>存储过程可以回传值，并可以接受参数。</li>
+<li>存储过程无法使用 SELECT 指令来运行，因为它是子程序，与查看表，数据表或用户定义函数不同。</li>
+<li>存储过程可以用在数据检验，强制实行商业逻辑等。</li>
+</ul>
+<p>通过 DELIMITER $$ 来定义结束标志</p>
+<h5 id="创建存储过程"><a href="#创建存储过程" class="headerlink" title="创建存储过程"></a>创建存储过程</h5><pre>
+DELIMITER ??
+CREATE PROCEDURE ShowStuScore()
+BEGIN
+SELECT * FROM tb_students_score;
+END ??
+delimiter ;  //将结束标志更换为分号
+</pre>
+
+<p>定义参数</p>
+<pre>
+DELIMITER //
+mysql> CREATE PROCEDURE GetScoreByStu
+(IN name VARCHAR(30))
+BEGIN
+SELECT student_score FROM tb_students_score WHERE student_name=name;
+END //
+</pre>
+
+<h5 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h5><p><code>call GetScoreByStu(&#39;王小二&#39;)</code>  存储过程调用时把代码放于mysql 中执行</p>
+<h4 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h4><p>触发器是与表有关的数据库对象，在满足定义条件时触发，并执行触发器中定义的语句集合。<br>触发器创建语法：<br>CREATE TRIGGER trigger_name trigger_time trigger_event ON tbl_name FOR EACH ROW trigger_stmt</p>
+<p>trigger_time 是触发器的触发时间，可以是 BEFORE 或者 AFTER，BEFORE 的含义指在检查约束前触发，而 AFTER 是在检查约束后触发。</p>
+<p>而 trigger_event 就是触发器的触发事件，可以是 INSERT、UPDATE 或者 DELETE。</p>
+<h5 id="创建一个触发器"><a href="#创建一个触发器" class="headerlink" title="创建一个触发器"></a>创建一个触发器</h5><pre>
+DELIMITER $$
+CREATE TRIGGER ins_film 
+AFTER INSERT ON film FOR EACH ROW BEGIN
+ INSERT INTO film_text (film_id, title, description)
+ VALUES (new.film_id, new.title, new.description);
+END;
+$$
+delimiter ;
+</pre>
+<p>插入 film 表记录的时候，会向 film_text 表中也插入相应的记录。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

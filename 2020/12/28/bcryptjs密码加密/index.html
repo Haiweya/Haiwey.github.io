@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="bcryptjs密码加密"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">bcryptjs密码加密</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-12-28</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/node/">#node</a> <a class="tag" href="/tags/bcrypt/">#bcrypt</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>Bcrypt是一个跨平台的文件加密工具。为了保护用户的明文密码不被泄露，一般会对密码进行单向不可逆加密——哈希。而Bcrypt恰恰就做到这一点，通过Bcrypt加密的明文密码即使解密也不是真的“解密”，哪怕是内部人员，也不会看到密码。从而极大的保证了密码的安全性~</p>
+<!-- more  -->
+
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><pre style="background:#004445">
+    npm install bcryptjs 
+</pre>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>在用户注册的时候，把用户设置的密码进行加密，把加密之后的密码直接存储数据库，在用户登录的时候解密验证即可。</p>
+<ul>
+<li>准备</li>
+</ul>
+<pre style="background:#004445">
+    var express = require('express')
+    var bodyParser = require('body-parser')
+    const mongoose = require('mongoose');
+    var app = express()
+
+
+    // 开启端口
+    const port=process.env.PORT || 3000;
+    app.listen(port,(req,res)=>{
+        console.log (`server is running on ${port}` );
+    })
+    //链接MongoDB数据库
+    mongoose.connect('mongodb+srv://root:1234@cluster0-t6hju.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true })
+    .then(()=>{
+        console.log('mongoodb connected');
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+
+    // 创建 application/json 解析
+    var jsonParser = bodyParser.json()
+    // 创建 application/x-www-form-urlencoded 解析
+    var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+    // 引入路由
+    const user =require("./api/users");
+    // 使用路由
+    app.use("/api/user/",user)
+
+    module.exports=urlencodedParser,jsonParser;
+</pre>
+
+<ul>
+<li>创建模型<br>Models 是从 Schema 编译来的构造函数。 它们的实例就代表着可以从数据库保存和读取的 documents。 从数据库创建和读取 document 的所有操作都是通过 model 进行的。</li>
+</ul>
+<pre style="background:#004445">
+//创建用户模型
+    const mongoose=require('mongoose');
+    const Schema= mongoose.Schema;
+    const userSchema = new Schema({
+        name:{
+            type:String,
+            required:true  
+        },
+        email:{
+            type:String,
+            required:true
+        },
+        password:{
+            type:String,
+            required:true
+        },
+        avatar:{
+            type:String
+        },
+        date:{
+            type:Date,
+            default:Date.now
+        },
+        identity:{
+            type:String,
+            required:true
+        }
+    });
+
+    module.exports=user=mongoose.model("users",userSchema);   //直接用user查询mongoose
+</pre>
+
+<ul>
+<li>密码加密，用户信息存储，注册成功</li>
+</ul>
+<pre style="background:#004445">
+    const express=require('express')
+    const router=express.Router();   //这个地方出过错
+    const bcrypt = require('bcryptjs');
+    const User= require('../module/user')  //引入模型
+    const gravatar = require('gravatar');
+    const urlencodedParser = require('../index')
+    router.post('/register',urlencodedParser,(req,res)=>{
+        if (!req.body) return res.sendStatus(400)
+        console.log(req.body.name);  
+        User.findOne({email:req.body.email})
+        .then( (user)=>{
+            if(user){
+                res.status(400).json("该邮箱已被注册")
+            }else{
+                //default mm会返回一个头像，404直接报错
+                const avatar = gravatar.url(req.body.email, {
+                    s: '200',
+                    r: 'pg',
+                    d: 'mm'
+                });
+
+                var newUser= new User({
+                    name:req.body.name,
+                    avatar,
+                    email:req.body.email,
+                    password:req.body.password,
+                    identity:req.body.identity
+                })
+                // 密码加密bcrypt,10是加密模式，hash为加密后的密码
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if (err) throw err;
+
+                    newUser.password = hash;
+
+                    newUser
+                        .save()    //数据存储   
+                        .then(user => res.json(user))
+                        .catch(err => console.log(err));
+                    });
+                });  
+            }
+        })
+    })
+    module.exports=router;
+</pre>
+
+<p>如上代码，我们用postman进行测试,如下图所示加密前的密码为<code>123</code>加密后的密码为<code>$2a$10$rUffGQ./J6GTD5kyVJdmIeEKJn2lzIJJ4HD8d.ZenP/4DJI4QYNBq</code></p>
+<p><a href="https://sm.ms/image/qn3aERsS1l9uXZd" target="_blank"><img src="https://i.loli.net/2020/01/17/qn3aERsS1l9uXZd.png" /></a></p>
+<p>数据库中存储数据如下所示：</p>
+<p><a href="https://sm.ms/image/mSu49sUZOIjKNgF" target="_blank"><img src="https://i.loli.net/2020/01/17/mSu49sUZOIjKNgF.png" /></a></p>
+<ul>
+<li>密码解密验证</li>
+</ul>
+<pre style="background:#004445">
+    router.post("/login",(req,res)=>{
+        const email=req.body.email;
+        const password=req.body.password;
+        user.findOne({email})
+        //这里的user为从数据库中查到了的数据，查到后作为参数传递给回调函数
+        .then(user=>{  
+            if(!user){
+                return res.status(404).json("用户不存在！")
+            }else{
+                //验证密码
+                bcrypt.compare(password, user.password)
+                .then(isMatch=>{
+                    if(isMatch){
+                        res.json({msg:'success'});
+                        //返回success,做其他处理
+                    }else{
+                        return res.status(400).json('密码错误');  //返回对应的字符串，与前端的内容进行匹配
+                    }
+                })
+            }
+        })
+    })
+</pre>
+
+<p>效果如下：<br><a href="https://sm.ms/image/zKvbwHgyjFZJ1lf" target="_blank"><img src="https://i.loli.net/2020/01/17/zKvbwHgyjFZJ1lf.png" /></a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

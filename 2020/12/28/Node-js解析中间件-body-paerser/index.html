@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Node.js解析中间件--body-paerser"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Node.js解析中间件--body-paerser</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-12-28</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/node/">#node</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>Node.js body parsing middleware.</p>
+<p>Parse incoming request bodies in a middleware before your handlers, available under the req.body property</p>
+<!-- more  -->
+<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>body-parser是一个HTTP请求体解析中间件，使用这个模块可以解析JSON、Raw、文本、URL-encoded格式的请求体，Express框架中就是使用这个模块做为请求体解析中间件。</p>
+<h4 id="body-parser-与原生解析相对比"><a href="#body-parser-与原生解析相对比" class="headerlink" title="body-parser 与原生解析相对比"></a>body-parser 与原生解析相对比</h4><p>Node.js 原生HTTP模块中，是将用户请求数据封装到了用于请求对象req中，该对象是一个IncomingMessage，该对象同时也是一个可读流对象。<br>body-parser模块是一个Express中间件，它使用非常简单且功能强大。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><pre style="background:#004445">
+    npm install body-parser
+</pre>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>思路大致为：开启本地3000端口，配置接口路由<a target="_blank" rel="noopener" href="http://localhost:3000/login">http://localhost:3000/login</a> 接收参数</p>
+<pre style="background:#004445">
+    var express = require('express')
+//获取模块
+    var bodyParser = require('body-parser')
+
+    var app = express();
+
+    // 创建 application/json 解析
+    var jsonParser = bodyParser.json()
+
+    // 创建 application/x-www-form-urlencoded 解析
+    var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+    // POST /login 获取 URL编码的请求体
+    app.post('/login', urlencodedParser, function (req, res) {
+    if (!req.body) return res.sendStatus(400)
+    res.send('welcome, ' + req.body.username)
+    })
+
+    // POST /api/users 获取 JSON 编码的请求体
+    app.post('/api/users', jsonParser, function (req, res) {
+    if (!req.body) return res.sendStatus(400)
+    // create user in req.body
+    });
+    app.listen(3000);
+
+</pre>
+
+<p>我们使用postman进行测试，如下图所示，当我们往接口post数据时，我们可以在req.body中取到。<br><a href="https://sm.ms/image/EWtHSOQr5R48KCl" target="_blank"><img src="https://i.loli.net/2020/01/17/EWtHSOQr5R48KCl.png" /></a></p>
+<h4 id="对请求体的四种解析方式"><a href="#对请求体的四种解析方式" class="headerlink" title="对请求体的四种解析方式"></a>对请求体的四种解析方式</h4><ul>
+<li>bodyParser.json(options): 解析json数据</li>
+<li>bodyParser.raw(options): 解析二进制格式(Buffer流数据)</li>
+<li>bodyParser.text(options): 解析文本数据</li>
+<li>bodyParser.urlencoded(options): 解析UTF-8的编码的数据。</li>
+</ul>
+<h4 id="参数Options"><a href="#参数Options" class="headerlink" title="参数Options"></a>参数Options</h4><blockquote>
+<p>The urlencoded function takes an optional options object that may contain any of the following keys:</p>
+</blockquote>
+<ul>
+<li><p>extend 扩展选项允许您在使用querystring库（如果为false）或qs库（为true）解析URL编码的数据之间进行选择。 “扩展”语法   允许将丰富的对象和数组编码为URL编码格式，从而使URL编码具有类似JSON的体验。 有关更多信息，请参见qs库。</p>
+<p>默认值为true，但是不建议使用默认值。 请研究qs和querystring之间的区别，然后选择适当的设置。</p>
+</li>
+<li><p>inflate - 设置为true时，deflate压缩数据会被解压缩；设置为false时，deflate压缩数据会被拒绝。默认为true。</p>
+</li>
+<li><p>limit - 设置请求的最大数据量。默认为’100kb’</p>
+</li>
+<li><p>reviver - 传递给JSON.parse()方法的第二个参数，详见JSON.parse()</p>
+</li>
+<li><p>strict - 设置为true时，仅会解析Array和Object两种格式；设置为false会解析所有JSON.parse支持的格式。默认为true</p>
+</li>
+<li><p>type - 该选项用于设置为指定MIME类型的数据使用当前解析中间件。这个选项可以是一个函数或是字符串，当是字符串是会使用    type-is来查找MIMI类型；当为函数是，中间件会通过fn(req)来获取实际值。默认为application/json。</p>
+</li>
+<li><p>verify - 这个选项仅在verify(req, res, buf, encoding)时受支持</p>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

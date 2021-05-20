@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="H5开发框架的起草与思考"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">H5开发框架的起草与思考</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-05-19</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E6%A1%86%E6%9E%B6%E6%8E%A2%E7%B4%A2/">框架探索</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/H5/">#H5</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><p>机电智慧运维管理系统H5端，道路智慧养护管理平台H5端</p>
+<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><p>去除不必要的组件、配置、依赖包，添加新的技术框架与配置；</p>
+<h4 id="与baseweb框架的异同分析"><a href="#与baseweb框架的异同分析" class="headerlink" title="与baseweb框架的异同分析"></a>与baseweb框架的异同分析</h4><h5 id="与原框架大致一致点"><a href="#与原框架大致一致点" class="headerlink" title="与原框架大致一致点"></a>与原框架大致一致点</h5><ul>
+<li><p>vue.confit.js 文件的配置，同样把其拆分为Dev、index、prod三个文件，将其在index文件中通过webpack中的merge函数进行汇总并导入vue.config.js中，并去除不必要的alias配置，重新配置devServer；</p>
+</li>
+<li><p>api 层结构相同，重新梳理并书写request.js文件中请求拦截 和相应拦截中的处理，其中在H5端同样可以使用npprogress 插件，如有需要node_modules中修改css文件从而达到预期的效果；</p>
+</li>
+<li><p>model 层  </p>
+</li>
+<li><p>router 主要调整hook.js文件</p>
+</li>
+<li><p>store（vuex）</p>
+</li>
+<li><p>assets 文件（需配置再引入svg）</p>
+</li>
+<li><p>多环境配置（开发环境和生产环境）</p>
+</li>
+</ul>
+<h5 id="vant-框架的嵌入与使用"><a href="#vant-框架的嵌入与使用" class="headerlink" title="vant 框架的嵌入与使用"></a>vant 框架的嵌入与使用</h5><p>一个轻量、可靠的移动端 Vue 组件库；就相当于element UI般的存在; vant支持组件按需加载、公共模块复用、组件编译流程化是业界主流的移动端开发框架之一。<br>(官方地址)[<a target="_blank" rel="noopener" href="https://youzan.github.io/vant/#/zh-CN/]">https://youzan.github.io/vant/#/zh-CN/]</a></p>
+<h5 id="postcss-config-js-文件配置"><a href="#postcss-config-js-文件配置" class="headerlink" title="postcss.config.js 文件配置"></a>postcss.config.js 文件配置</h5><p>postcss它是一个利用JS插件来对CSS进行转换的工具（转rem ,vw等），这些插件非常强大在框架中对其处理如下：</p>
+<pre  style="background:#004445">
+module.exports = {
+    plugins: {
+        'autoprefixer': {
+            overrideBrowserslist: [
+                "Android 4.1",
+                "iOS 7.1",
+                "Chrome > 31",
+                "ff > 31",
+                "ie >= 8"
+            ],
+            grid: true,
+            'postcss-px-to-viewport': {
+                viewportWidth: 375,
+            },
+        },
+    }
+}
+</pre>
+<p>给出两个配置参考案例：<br><em>px转rem</em> ,首先安装<code>postcss-pxtorem</code>，然后配置postcss.config.js文件</p>
+<pre  style="background:#004445">
+module.exports = () => ({
+  plugins: [
+    require('autoprefixer')(),
+    // require('postcss-px2rem')({ remUnit: 75 })
+    require('postcss-pxtorem')({
+      rootValue: 37.5,
+      propList: ['*']
+    })
+  ]
+</pre>
+
+<p><em>px转vw</em><br>Vant 默认使用 px 作为样式单位，如果需要使用 viewport 单位 (vw, vh, vmin, vmax)，推荐使用 postcss-px-to-viewport 进行转换。postcss-px-to-viewport 是一款 PostCSS 插件，用于将 px 单位转化为 vw/vh 单位。配置之前首先安装<code>postcss-px-to-viewport</code>插件</p>
+<pre style="background:#004445">
+module.exports = {
+  plugins: {
+    autoprefixer: {},
+    'postcss-px-to-viewport': {
+      viewportWidth: 375, // 视窗的宽度，对应的是我们设计稿的宽度，一般是750
+      // viewportHeight: 1334, // 视窗的高度，根据750设备的宽度来指定，一般指定1334，也可以不配置
+      unitPrecision: 3, // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
+      viewportUnit: 'vw', // 指定需要转换成的视窗单位，建议使用vw
+      selectorBlackList: ['.ignore', '.hairlines'], // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名
+      minPixelValue: 1, // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值
+      mediaQuery: false // 允许在媒体查询中转换`px`
+    },
+    'postcss-viewport-units': {
+      // 排除会产生警告的部份
+      filterRule: rule => rule.nodes.findIndex(i => i.prop === 'content') === -1
+    },
+    cssnano: {
+      preset: 'advanced',
+      autoprefixer: false, // 和autoprefixer同样具有autoprefixer，保留一个
+      'postcss-zindex': false
+    }
+  }
+}
+</pre>
+
+<h4 id="vant按需引入配置"><a href="#vant按需引入配置" class="headerlink" title="vant按需引入配置"></a>vant按需引入配置</h4><p>使用插件<code>babel-plugin-import</code><br>babel-plugin-import 是一款 babel 插件，它会在编译过程中将 import 的写法自动转换为按需引入的方式。<br>然后在babel.config.js 中进行配置：</p>
+<pre style="background:#004445">
+module.exports = {
+  plugins: [
+    ['import', {
+      libraryName: 'vant',
+      libraryDirectory: 'es',
+      style: true
+    }, 'vant']
+  ]
+};
+</pre>
+
+<h4 id="配置两个后端请求地址"><a href="#配置两个后端请求地址" class="headerlink" title="配置两个后端请求地址"></a>配置两个后端请求地址</h4><p>具体方法是在请求拦截中取到url参数，如果请求到的是login接口则把baseURL 替换成为另外的登录请求接口，这样做存在的问题是在前端跨域代理不能生效，会出现跨域的错误。最后登录跨域的问题是在后端处理的。</p>
+<h5 id="NProgress-适配"><a href="#NProgress-适配" class="headerlink" title="NProgress 适配"></a>NProgress 适配</h5><p>此插件本来使用在web端，但如需在H5端使用也是可行的使用方式无多大变动，但如果H5端有特殊的样式需求则可到node_modules中修改NProgress.css文件达成目的。</p>
+<h5 id="登录页面及登录逻辑"><a href="#登录页面及登录逻辑" class="headerlink" title="登录页面及登录逻辑"></a>登录页面及登录逻辑</h5><p>在本次H5项目中无权限管理逻辑，所以只是做个简单的登录，获取到token之后进行保存，然后每次请求的时候带上token进行网络请求</p>
+<h4 id="优化点和待解决问题"><a href="#优化点和待解决问题" class="headerlink" title="优化点和待解决问题"></a>优化点和待解决问题</h4><ul>
+<li><p>加密与解密</p>
+</li>
+<li><p>websocket</p>
+</li>
+<li><p>yarn </p>
+</li>
+</ul>
+<h4 id="进步点"><a href="#进步点" class="headerlink" title="进步点"></a>进步点</h4><ul>
+<li><p>从框架的角度考虑并解决问题</p>
+</li>
+<li><p>npm -&gt;yarn </p>
+</li>
+<li><p>websocket 实践</p>
+</li>
+<li><p>对项目配置方面更深一步的理解</p>
+</li>
+<li><p>新技术框架的使用，与移动端适配</p>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>为了适应智慧平台开发所需，本框架在建设时与web端前端开发框架baseweb尽量保持高度一致，并结合H5端的需求做到最大限度的适配与满足。</p>
+<p>H5 代码地址：<code>http://192.168.1.53/hanma/h5</code></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

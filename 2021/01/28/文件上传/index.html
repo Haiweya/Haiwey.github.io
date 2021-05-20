@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Han Ma">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="文件上传"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Haiweya"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://haiweya.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Haiweya" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Haiweya</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">文件上传</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Han Ma</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-01-28</span>
+            <span class="time">10:11:10</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/%E8%B5%84%E6%96%99%E5%8F%82%E8%80%83/">资料参考</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">#文件上传</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h3 id="FormData进行二进制文件上传"><a href="#FormData进行二进制文件上传" class="headerlink" title="FormData进行二进制文件上传"></a><code>FormData</code>进行二进制文件上传</h3><p><code>FormData</code>是<code>XMLHttpRequest Level 2</code>新增的一个接口，利用<code>FormData</code>对象，可以通过JavaScript用一些键值对来模拟一系列表单控件，还可以使用<code>ajax</code>方法来异步的提交这个”表单”，减少表单拼接，提高工作效率。同时使用<code>FormData</code>的最大优点就是我们可以异步上传一个二进制文件。</p>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>使用append方法添加数据时，添加的数据必须是String、Bolb或者File，假如添加的是个对象，后台会被解析成了object object</p>
+<p>当添加多条相同key的数据时，注意set和delete方法会全部更改和删除</p>
+<pre style="background:#002b36">
+// 通过FormData构造函数创建一个空对象
+var formdata = new FormData();
+// 可以通过append()方法来追加数据，可以添加多条相同key的数据
+formdata.append("name","laotie");
+formdata.append("name","laoyang");
+
+// 通过get方法对值进行读取
+console.log(formdata.get("name"));  // laotie
+// 通过getAll方法读取key为name的所有值
+console.log(formdata.getAll("name"));  // ["laotie", "laoyang"]
+
+// 通过set方法对值进行设置
+formdata.set("name","laoliu");
+console.log(formdata.get("name"));  // laoliu
+
+// 判断是否包含key为name的数据
+console.log(formdata.has("name"));  // true
+
+//删除key为name的值
+formdata.delete("name");
+</pre>
+
+
+
+<h4 id="一、序列化表单"><a href="#一、序列化表单" class="headerlink" title="一、序列化表单"></a>一、序列化表单</h4><p>所有的输入元素都需要有<strong>name</strong>属性，否则无法访问到值。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;myForm&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myForm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>Enter name:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;useracc&quot;</span>&gt;</span>Enter account number:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;useracc&quot;</span> <span class="attr">name</span>=<span class="string">&quot;useracc&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;userfile&quot;</span>&gt;</span>Upload file:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;userfile&quot;</span> <span class="attr">name</span>=<span class="string">&quot;userfile&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit!&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> myForm = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;myForm&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> formData = <span class="keyword">new</span> FormData(myForm);</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 通过get方法获得name为advName元素的value值</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(formdata.get(<span class="string">&quot;username&quot;</span>));</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="二、二进制文件上传"><a href="#二、二进制文件上传" class="headerlink" title="二、二进制文件上传"></a>二、二进制文件上传</h4><p>如果添加的value是个对象，要用<code>JSON.stringify()</code>格式化</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;upload&quot;</span> <span class="attr">id</span>=<span class="string">&quot;upload&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span>	</span><br><span class="line"><span class="javascript">		upload:<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 由于时间和条件原因，这里只给小明上传一张写真照</span></span></span><br><span class="line"><span class="javascript">                data.append(<span class="string">&#x27;json[0][image]&#x27;</span>,file)</span></span><br><span class="line"><span class="javascript">            	<span class="comment">// 循环添加对象其它字段</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,len=json.length;i&lt;len;i++)&#123;</span></span><br><span class="line"><span class="javascript">                    data.append(<span class="string">&#x27;json[&#x27;</span>+i+<span class="string">&#x27;][name]&#x27;</span>,json[i].name)</span></span><br><span class="line"><span class="javascript">                    data.append(<span class="string">&#x27;json[&#x27;</span>+i+<span class="string">&#x27;][age]&#x27;</span>,json[i].age)</span></span><br><span class="line"><span class="javascript">                    data.append(<span class="string">&#x27;json[&#x27;</span>+i+<span class="string">&#x27;][family][father]&#x27;</span>,json[i].family.father)</span></span><br><span class="line"><span class="javascript">                    data.append(<span class="string">&#x27;json[&#x27;</span>+i+<span class="string">&#x27;][family][mother]&#x27;</span>,json[i].family.mohter)</span></span><br><span class="line">                &#125;</span><br><span class="line">                axios.post(api.sendJSON,data,&#123;</span><br><span class="line">                    headers: &#123;</span><br><span class="line"><span class="javascript">                        <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;multipart/form-data&quot;</span></span></span><br><span class="line">                    &#125;</span><br><span class="line"><span class="javascript">                &#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(res);</span></span><br><span class="line"><span class="javascript">                &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(error);</span></span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="动态配置操作权限"><a href="#动态配置操作权限" class="headerlink" title="动态配置操作权限"></a>动态配置操作权限</h3><pre style="background:#002b36">
+const permission = [
+    {name: '一级菜单1', code: 'p1', level: 1},
+    {name: '一级菜单2', code: 'p2', level: 1},
+    {name: '一级菜单3', code: 'p3', level: 1},
+    {name: '1-1菜单', code: 'p4', level: 2},
+    {name: '1-2菜单', code: 'p5', level: 2},
+    {name: '2菜单', code: 'p6', level: 2},
+    {name: '1-1-1菜单', code: 'p7', level: 3},
+]
+const route = [
+    {
+        path: '/system-management',
+        redirect: '/system-management/user',
+        name: 'SystemManagement',
+        meta: {
+            title: '一级菜单1',
+            icon: 'gb-system',
+            code: 'p1'
+        },
+        children: [
+            {
+                path: 'user',
+                name: 'User',
+                meta: { title: '1-2菜单', code: 'p5' }
+            },
+            {
+                path: 'dictionary',
+                name: 'Dictionary',
+                meta: { title: '1-1菜单', code: 'p4' },
+                children: [
+                    {
+                        path: 'list',
+                        name: 'dictionaryList',
+                        hidden: true,
+                        meta: { title: '1-1-1菜单', code: 'p7', activeMenu: '/system-management/dictionary' }
+                    },
+                    {
+                        path: 'child',
+                        name: 'Child',
+                        hidden: true,
+                        meta: { title: '子项管理', activeMenu: '/system-management/dictionary', id: 33 }
+                    }
+                ]
+            },
+            {
+                path: 'record',
+                name: 'Record',
+                meta: { title: '系统日志', id: 23 }
+            }
+        ]
+    }
+]
+
+// 过滤出有权限的菜单code
+const codes = permission.map(item=>item.code)
+
+const filterMenu = (route) => {
+    // 这里要使用倒循环，如果正循环会导致splice删除数组项后，下标index发生变化
+    for (let i = route.length - 1; i >= 0; i--) {
+      // 如果code不存在，默认是不做权限限制的；code存在且不在权限列表中就删除此项，如果code不存在或者code在权限列表中，检查是否还有子项，有就继续循环
+      if (route[i].meta.code && !codes.includes(route[i].meta.code)) {
+        route.splice(i, 1)
+      } else {
+        if (route[i].children && route[i].children.length > 0) {
+          filterMenu(route[i].children)
+        }
+      }
+    }
+  }
+filterMenu(route)
+console.log(route)
+
+</pre>
+
+<h3 id="下载二进制文件流"><a href="#下载二进制文件流" class="headerlink" title="下载二进制文件流"></a>下载二进制文件流</h3><p>下载文件主要有2种方式，具体哪一种取决于后端：</p>
+<ul>
+<li>后台服务器的静态目录有可供下载的静态资源，后台人员告知你文件路径，直接window.open(url)或者a标签设置download点击下载即可</li>
+<li>如果后台服务器无可供下载的静态资源，返回的是一个二进制文件流(response-type: application/octet-stream;charset=UTF-8 )，则使用第二种方式（将文件写入内存，并且创建a元素，a链接href属性指向内存中的文件，download属性指向要下载的文件名，模拟a元素的点击事件，进行下载）</li>
+</ul>
+<p>第一种较为简单，主要说下第二种，其实第二种下载方式是包含第一种的。这里以vue项目为例，主要步骤如下：</p>
+<ol>
+<li>请求接口获取文件流</li>
+<li>生成Blob对象</li>
+<li>生成url</li>
+<li>模拟a标签点击下载</li>
+<li>删除a标签和Blob对象</li>
+</ol>
+<pre style="background:#002b36">
+import axios from 'axios'
+import { getToken } from '@/utils/auth'
+
+// 以post请求为例
+/**
+ * 
+ * @param {String} url  请求地址
+ * @param {Object} params  请求参数
+ * @param {String} fileName 文件名
+ * @param {String} fileType  下载的文件类型
+ */
+export function downLoad(url, params, fileName, fileType = 'Excel') {
+    // appSource.url为请求地址前缀，以实际项目为准
+  axios.post(appSource.url + url, params, {
+    headers: { 'Authorization': getToken(), 'Content-Type': 'application/json' },
+    // 这里设置为blob或者arraybuffer都可以
+    responseType: 'blob'
+    // responseType: 'arraybuffer'
+  }).then(res => {
+    handleResult(fileName, fileType, res)
+  })
+}
+
+// 处理返回文件流
+function handleResult(fileName, fileType, res) {
+  // 各种文件格式配置
+  const contentType = {
+    Excel: 'application/vnd.ms-excel;charset=UTF-8',
+    Zip: 'application/zip;charset=UTF-8',
+    Word: 'application/msword;charset=UTF-8'
+  }
+  const blob = new Blob([res.data], {
+    type: contentType[fileType]
+  })
+
+  // URL.createObjectURL()根据传入的参数创建一个指向该参数对象的URL
+  const objectUrl = URL.createObjectURL(blob)
+
+  // 可以直接用window.open()下载，但是没法自定义文件名称
+  // window.open(objectUrl)
+
+  // 模拟a标签点击下载文件
+  const a = document.createElement('a')
+  a.href = objectUrl
+  a.download = fileName
+  // a标签添加到body中，然后模拟点击，火狐浏览器需要把a标签添加到body中点击才有效，谷歌可以省略appendChild这一步
+  document.body.appendChild(a)
+  a.click()
+  // 把a标签删除，减少dom节点冗余
+  document.body.removeChild(a)
+
+  // URL.revokeObjectURL()方法会释放一个通过URL.createObjectURL()创建的对象URL
+  URL.revokeObjectURL(objectUrl)
+}
+
+// 最后在需要使用的地方import引入后调用downLoad()即可
+</pre>
+
+
+
+<h3 id="模拟a标签点击下载文件功能"><a href="#模拟a标签点击下载文件功能" class="headerlink" title="模拟a标签点击下载文件功能"></a>模拟a标签点击下载文件功能</h3><pre style="background:#002b36">
+// file是要下载的文件对象
+handleDownload(file) {
+    // 首先创建一个a标签
+    const a = document.createElement('a')
+
+    // 分别设置download、href、target属性，把这个a标签设置为download类型
+    a.download = file[0].name
+    a.href = file[0].url
+    a.target = '_blank'
+
+    // a标签添加到body中，然后模拟点击
+    document.body.appendChild(a)
+    a.click()
+
+    // 最后一定要把a标签删除，减少dom节点冗余
+    document.body.removeChild(a)
+}
+</pre>
+
+<h3 id="keep-alive缓存"><a href="#keep-alive缓存" class="headerlink" title="keep-alive缓存"></a>keep-alive缓存</h3><p>本项目是基于<code>vue-element-admin</code>开发的，头部的快捷导航利用keep-alive可以做缓存处理，但是前提时路由的name和组件的name完全一致才能生效，还有就是该功能只能缓存到第二级，如果还有router-view则无法缓存这个组件，多层级的缓存需要特殊处理才能生效。</p>
+<p>多层级解决方案就是缓存时把父和子组件的name都添加上。以本项目为例，其中一个新增子页面需要缓存，直接使用keep-alive的include缓存组件无效，查找问题发现需要缓存的页面还嵌套了一层router-view。此时将这个router-view所在组件命名为parentPage，里面需要缓存的添加功能子页面命名为addPage，在第一个keep-alive中如下设置即可使缓存生效：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">keep-alive</span> <span class="attr">include</span>=<span class="string">&quot;parentPage,addPage&quot;</span> <span class="attr">:max</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">router-view</span> <span class="attr">:key</span>=<span class="string">&quot;key&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是这样会存在一个问题，parentPage父页面也缓存后就会导致内部子组件都会被缓存，其中有一个列表展示页面，新增数据后由于被缓存问题，当前列表不会被刷新，看不到最新添加的数据，这并不是我们希望的结果。这时可以取巧，如上设置max最大值为1，那么只要跳转到新增子页面了，那么父页面的缓存就会取消，那么此时回到列表页，列表也就对应刷新了。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
